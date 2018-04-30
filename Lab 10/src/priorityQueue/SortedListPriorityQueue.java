@@ -25,13 +25,20 @@ public class SortedListPriorityQueue<K, V> extends AbstractListPriorityQueue<K, 
 	@Override
 	public Entry<K,V> insert(K key, V value) throws IllegalArgumentException {
 		//if(this.size()<1)return null;
-		super.validate(key); 
+		super.validate(key);
+		if(list.size()==0){
+			Entry<K,V> newest = new PQEntry<K,V>(key, value);
+			list.add(newest);
+			return newest;
+		}
+		else{
 		Entry<K,V> newest = new PQEntry<K,V>(key, value);
 		int curr = list.size()-1; 
 		while (curr >= 0  && compare(list.get(curr), newest) > 0)
 			curr--; 
 		list.add(curr, newest); 
 		return newest; 
+		}
 	}
 
 	@Override
